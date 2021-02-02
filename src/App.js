@@ -4,6 +4,7 @@ import Tasks from './components/Tasks.js';
 import AddTask from './components/AddTask.js';
 
 function App() {
+  const [showAddTask, setShowAddTask] = useState(false);
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -24,6 +25,11 @@ function App() {
       reminder: false
     }
   ]);
+
+  // Show Form
+  const toggleShowAddTask = () => {
+    setShowAddTask(!showAddTask);
+  };
 
   // Add Task
   const addTask = (task) => {
@@ -48,8 +54,8 @@ function App() {
 
   return (
     <div className='container'>
-      <Header />
-      <AddTask onAdd={addTask} />
+      <Header onShow={toggleShowAddTask} isOpen={showAddTask} />
+      {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
